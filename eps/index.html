@@ -61,7 +61,7 @@
 	<br>
 	Notes: <input type="textarea" size="50" name="notes" id="notes" placeholder="RN from ABC Agency">
 	<br>
-	<button onclick="window.open('/barcode?lot=' + document.getElementById('lot').value +'&expiry=' + String(document.getElementById('expiry').valueAsDate.getMonth() + 1).padStart(2, '0') + '-' + String(document.getElementById('expiry').valueAsDate.getDate()).padStart(2, '0') + '-' + document.getElementById('expiry').valueAsDate.getFullYear() + '&last=' + document.getElementById('lastName').value + '&first=' + document.getElementById('firstName').value + '&note=' + document.getElementById('notes').value + '&desc=' + document.querySelector('input[name=&quot;desc&quot;]:checked').value , 'win');">Generate Data Matrix Barcode</button>
+	<button onclick="window.open('/barcode?lot=' + document.getElementById('lot').value +'&expiry=' + String(document.getElementById('expiry').valueAsDate.getMonth() + 1).padStart(2, '0') + '-' + String(document.getElementById('expiry').valueAsDate.getDate() + 1).padStart(2, '0') + '-' + document.getElementById('expiry').valueAsDate.getFullYear() + '&last=' + document.getElementById('lastName').value + '&first=' + document.getElementById('firstName').value + '&note=' + document.getElementById('notes').value + '&desc=' + document.querySelector('input[name=&quot;desc&quot;]:checked').value , 'win');">Generate Data Matrix Barcode</button>
 	<br>
 	<div style='padding-top:8px; text-align:center; font-size:15px; font-family: Source Sans Pro, Arial, sans-serif;position: absolute;bottom:0;width: 100%;'>
 		Made possible by:
