@@ -24,7 +24,7 @@
 	let desc = getParam('desc');
 
 	document.getElementById('out').src = `https://barcode.tec-it.com/barcode.ashx?data=${lot}%5Ct${expiry}%5Ct%5Ct${last}%5Ct${first}%5Ct%5Ct%5Ct%5Ct%5Ct${note}&code=DataMatrix&translate-esc=true&dmsize=Default`;
-	document.getElementById('info').innerHTML = `${desc}<br>${lot} | ${expiry}<br>Immunizer<br>${last}, ${first}<br>${note}`;
+	document.getElementById('info').innerHTML = `${desc}<br>${lot} | ${expiry}<br>${last}, ${first}<br>${note}`;
 	window.print();
 </script>
 </body>
