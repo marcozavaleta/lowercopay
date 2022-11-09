@@ -3,70 +3,25 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>EPS Assistance Tools | LowerCopay.org</title>
+	<title>EPS Tools | LowerCopay.org</title>
+	<link rel="stylesheet" type="text/css" href="/styles/main.css">
 	<style type="text/css">
-		body {
-			background-color: grey;
-		}
 		.wrapper {
-			display: flex;
-			padding: 4px;
-			background-color: darkgrey;
-		}
-		.custom-input {
-			flex-grow: 1;
-		}
-		.custom-input input[type=radio] {
-			display: none;
-		}
-		.custom-input label {
-			display: block;
-			padding: 6px 8px;
-			font-weight: bold;
-			text-align: center;
-			transition : all .3s 0s ease;
-		}
-		.custom-input input[type=radio]:checked + label {
-			background-color: lightblue;
-			border-radius: 4px;
+			display: inherit;
 		}
 	</style>
 </head>
 <body>
-	<h3>Immunization Quick-fill Data Matrix Barcode Generator</h3>
+	<h3>EPS Tools</h3>
+	<p>These small tools are designed to facilitate data entry at certain stages within EPS.</p>
 	<div class="wrapper">
-	<div class="custom-input"><input type="radio" name="desc" id="PfizerMonovalent" value="Pfizer Monovalent">
-	<label for="PfizerMonovalent">Pfizer <b>MONO</b>valent</label></div>
-	<div class="custom-input"><input type="radio" name="desc" id="PfizerBivalent" value="Pfizer Bivalent">
-	<label for="PfizerBivalent">Pfizer <b>BI</b>valent</label></div>
-	<div class="custom-input"><input type="radio" name="desc" id="ModernaMonovalent" value="Moderna Monovalent">
-	<label for="ModernaMonovalent">Moderna <b>MONO</b>valent</label></div>
-	<div class="custom-input"><input type="radio" name="desc" id="ModernaBivalent" value="Moderna Bivalent" checked="true">
-	<label for="ModernaBivalent">Moderna <b>BI</b>valent</label></div>
-	<div class="custom-input"><input type="radio" name="desc" id="Fluarix" value="Fluarix">
-	<label for="Fluarix">Fluarix</label></div>
-	<div class="custom-input"><input type="radio" name="desc" id="FluzoneHD" value="Fluzone HD">
-	<label for="FluzoneHD">Fluzone HD</label></div>
-	<div class="custom-input"><input type="radio" name="desc" id="Flublok" value="Flublok">
-	<label for="Flublok">Flublok</label></div>
-	<div class="custom-input"><input type="radio" name="desc" id="Other">
-	<label for="Other"><input type="text" placeholder="Other" id="otherDesc"></label></div>
+		<div class="custom-input">
+			<input type="radio" name="desc" id="imm" onclick="window.location.href = '/eps/immunization-lot'">
+			<label for="imm" style="text-align: left;">Immunization Lot Quick-fill</label></div>
+		<div class="custom-input">
+			<input type="radio" name="desc" id="exp" onclick="window.location.href = '/eps/fill-expiration'">
+			<label for="exp" style="text-align: left;">Fill Expiration Quick-fill</label>
+		</div>
 	</div>
-	<br>
-	Lot #: <input type="text" name="lot" id="lot" placeholder="AB2394">
-	Expiration Date: <input type="date" name="expiry" id="expiry">
-	<br>
-	Last Name: <input type="text" name="lastName" id="lastName" placeholder="Applesmith">
-	First Name: <input type="text" name="firstName" id="firstName" placeholder="John">
-	<br>
-	Notes: <input type="textarea" size="50" name="notes" id="notes" placeholder="RN from ABC Agency">
-	<br>
-	<button onclick="window.open('/barcode?lot=' + document.getElementById('lot').value +'&expiry=' + String(document.getElementById('expiry').valueAsDate.getMonth() + 1).padStart(2, '0') + '-' + String(document.getElementById('expiry').valueAsDate.getDate() + 1).padStart(2, '0') + '-' + document.getElementById('expiry').valueAsDate.getFullYear() + '&last=' + document.getElementById('lastName').value + '&first=' + document.getElementById('firstName').value + '&note=' + document.getElementById('notes').value + '&desc=' + document.querySelector('input[name=&quot;desc&quot;]:checked').value , 'win');">Generate Data Matrix Barcode</button>
-	<br>
-	<div style='padding-top:8px; text-align:center; font-size:15px; font-family: Source Sans Pro, Arial, sans-serif;position: absolute;bottom:0;width: 100%;'>
-		Made possible by:
-		<a href='https://www.tec-it.com' title='Barcode Software by TEC-IT' target='_blank'>
-    TEC-IT Barcode Generator<br/><img alt='TEC-IT Barcode Software' border='0' src='http://www.tec-it.com/pics/banner/web/TEC-IT_Logo_75x75.gif'></a>
-</div>
 </body>
 </html>

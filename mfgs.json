@@ -1,0 +1,38 @@
+{
+	"bms": {
+		"name": "Bristol-Myers Squibb",
+		"drugs": {
+			"eliquis": {
+				"name": "Eliquis®",
+				"ingredient": "apixaban",
+				"logo": "https://www.eliquis.bmscustomerconnect.com/servlet/servlet.FileDownload?file=00P1Y00001GBWaLUAX",
+				"form": "tablet",
+				"forms": "tablets",
+				"strenghts": ["5mg", "2.5mg"]
+			}
+		}
+	},
+	"pfizer": {
+		"name": "Pfizer",
+		"drugs": {
+			"eliquis": {
+				"name": "Eliquis®",
+				"ingredient": "apixaban",
+				"logo": "https://www.eliquis.bmscustomerconnect.com/servlet/servlet.FileDownload?file=00P1Y00001GBWaLUAX",
+				"form": "tablet",
+				"forms": "tablets",
+				"strenghts": ["5mg", "2.5mg"]
+			}
+		}
+	},
+	"takeda": {
+		"name": "Takeda",
+		"drugs": {
+			"mydayis": {
+				"name": "Mydayis",
+				"ingredient": "amphetamine-dextroamphetamine (mixed salts of a single-entity amphetamine product)",
+				"logo": "https://www.mydayis.com/Content/images/mydayis-logo.svg",
+			}
+		}
+	}
+}
