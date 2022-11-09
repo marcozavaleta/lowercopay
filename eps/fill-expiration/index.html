@@ -19,7 +19,7 @@
     		document.body.innerHTML = '<p id="exp"></p><img id="out">';
     		document.body.style.backgroundColor = 'white';
 	    	let date = new Date();
-	    	let exp = String(date.getMonth() + 1).padStart(2, '0') + '-' + String(date.getDate()).padStart(2, '0') + '-' + date.getFullYear()
+	    	let exp = String(date.getMonth() + 1).padStart(2, '0') + '-' + String(date.getDate()).padStart(2, '0') + '-' + String(date.getFullYear() + 1)
 	    	document.getElementById('exp').innerText = exp;
 	    	document.getElementById('out').src = `https://barcode.tec-it.com/barcode.ashx?data=%5Ct%5Ct%5Ct%20%5Ct%5Ct%5Ct%5Ct%5Ct%5Ct${exp}%5Ct%5Cn&code=DataMatrix&translate-esc=true&dmsize=Default`;
 	    }
