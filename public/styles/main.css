@@ -1,0 +1,25 @@
+body {
+	background-color: grey;
+}
+.wrapper {
+	display: flex;
+	padding: 4px;
+	background-color: darkgrey;
+}
+.custom-input {
+	flex-grow: 1;
+}
+.custom-input input[type=radio] {
+	display: none;
+}
+.custom-input label {
+	display: block;
+	padding: 6px 8px;
+	font-weight: bold;
+	text-align: center;
+	transition : all .3s 0s ease;
+}
+.custom-input input[type=radio]:checked + label {
+	background-color: lightblue;
+	border-radius: 4px;
+}

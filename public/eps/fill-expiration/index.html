@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Fill Expiration Quick-fill | LowerCopay.org</title>
+	<link rel="stylesheet" type="text/css" href="/styles/main.css">
+</head>
+<body>
+	<h3>Fill Expiration Quick-fill</h3>
+	<button onclick="run();">Generate Today's Barcode</button>
+	<br>
+	<div style='padding-top:8px; text-align:center; font-size:15px; font-family: Source Sans Pro, Arial, sans-serif;position: absolute;bottom:0;width: 100%;'>
+		Made possible by:
+		<a href='https://www.tec-it.com' title='Barcode Software by TEC-IT' target='_blank'>
+    TEC-IT Barcode Generator<br/><img alt='TEC-IT Barcode Software' border='0' src='http://www.tec-it.com/pics/banner/web/TEC-IT_Logo_75x75.gif'></a>
+    <script type="text/javascript">
+    	function run() {
+    		document.body.innerHTML = '<p id="exp"></p><img id="out">';
+    		document.body.style.backgroundColor = 'white';
+	    	let date = new Date();
+	    	let exp = String(date.getMonth() + 1).padStart(2, '0') + '-' + String(date.getDate()).padStart(2, '0') + '-' + String(date.getFullYear() + 1)
+	    	document.getElementById('exp').innerText = exp;
+	    	document.getElementById('out').src = `https://barcode.tec-it.com/barcode.ashx?data=%5Ct%5Ct%5Ct%20%5Ct%5Ct%5Ct%5Ct%5Ct%5Ct${exp}%5Ct%5Cn&code=DataMatrix&translate-esc=true&dmsize=Default`;
+	    }
+    </script>
+</body>
+</html>
