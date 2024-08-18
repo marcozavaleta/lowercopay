@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Vaccine Lot Stickers | LowerCopay.org</title>
+	<link rel="stylesheet" type="text/css" href="/styles/main.css">
+	<style type="text/css">
+		label {
+			font-size: 100%;
+		}
+		input, select, textarea {
+			display: block;
+			border: 1px solid #000;
+			font-size: 100%;
+		}
+		input[type=checkbox] {
+			display: inline-block;
+		}
+		input[type=date] {
+			font-size: 60%;
+		}
+		input:disabled, textarea:disabled, select:disabled {
+			background-color: #ebebe4;
+		}
+		input {
+			text-transform: uppercase;
+		}
+		div {
+			display: inline-block;
+		}
+		div.section {
+			float: left;
+			margin-right: 30px;
+		}
+	</style>
+</head>
+<body>
+	<span><b>Dispensed Drug Information (up to 56 labels)</b></span><br>
+    <div>
+	    <label for="drug">Vaccine Selection</label>
+	    <select id="drug" name="drug" onchange="refresh();">
+			<option value="0">FLUARIX 2024-2025&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;58160-884-52</option>
+			<option value="1">FLUAD® 2024-2025&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;70461-024-03</option>
+			<option value="2">Flublok® 2024-2025&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;49281-724-10</option>
+			<option value="3">SHINGRIX&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;58160-823-11</option>
+			<option value="4">ABRYSVO™ (syringe, vial, adapter kit)&nbsp;&nbsp;0069-0344-10</option>
+			<option value="5">ABRYSVO™ (Act-O-Vial)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0069-2465-10</option>
+			<option value="6">AREXVY&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;58160-848-11</option>
+	    </select>
+	</div>
+	<br>
+	<div>
+		<label id="lot" for="lot">Lot</label>
+		<input type="text" id="lotData" name="lot">
+	</div>
+	<div>
+		<label id="exp" for="exp">Expiration</label>
+		<input type="date" id="expData" name="exp">
+	</div>
+	<br>
+	<div id="dil1" style="display: none;">
+		<label id="dilLot" for="dilLot"></label>
+		<input type="text" id="dilLotData" name="dilLot">
+	</div>
+	<div id="dil2" style="display: none;">
+		<label id="dilExp" for="dilExp"></label>
+		<input type="date" id="dilExpData" name="dilExp">
+	</div>
+	<br>
+	<div>
+		<label for="qty">Sticker Quantity</label>
+		<input type="number" id="qty" name="qty" value="10">
+	</div>
+	<div>
+		<input type="button" value="Add" onclick="addPrint()">
+	</div>
+	<div>
+		<input type="button" value="Print" onclick="doPrint()">
+	</div>
+	<br>
+	<ul id="printQueue">
+	</ul>
+<script type="text/javascript">
+	var vaccines = {
+		0: {name: "FLUARIX 2024-2025", ndc: "58160-884-52"},
+		1: {name: "FLUAD® 2024-2025", ndc: "70461-024-03"},
+		2: {name: "Flublok® 2024-2025", ndc: "49281-724-10"},
+		3: {name: "SHINGRIX", ndc: "58160-823-11", other: "Adjuvant", short: "Adj."},
+		4: {name: "ABRYSVO™", ndc: "0069-0344-10", other: "Diluent", short: "Dil."},
+		5: {name: "ABRYSVO™", ndc: "0069-2465-10"},
+		6: {name: "AREXVY", ndc: "58160-848-11", other: "Adjuvant", short: "Adj."},
+	}
+	function doPrint() {
+		let pq = document.getElementById('printQueue').children;
+		let pqSt = "";
+		for (var i = 0; i < pq.length; i++) {
+			pqSt += pq[i].dataset.string + "|";
+		}
+		if (pqSt == "") {
+			return window.alert("Nothing to print.");
+		}
+		pqSt = pqSt.substr(0, pqSt.length-1)
+		window.open("https://lowercopay.org/hcp/nexgen/vaccine-lot-stickers/print.html?" + pqSt);
+	}
+	function addPrint() {
+		let pq = document.getElementById("printQueue");
+		let newLi = document.createElement("li");
+		let qty = document.getElementById("qty").value;
+		let sI = document.getElementById("drug").selectedIndex;
+		let lot = document.getElementById("lotData").value.toUpperCase();
+		let exp = document.getElementById("expData").value.split("-");
+		exp.push(exp.shift());
+		exp = exp.join('/');
+		let printString = `<span class="ndc">${vaccines[sI].ndc}</span><br>${vaccines[sI].name}<br>`;
+		if ([3,4,6].includes(sI)) {
+			let dilLot = document.getElementById("dilLotData").value.toUpperCase();
+			let dilExp = document.getElementById("dilExpData").value.split("-");
+			dilExp.push(dilExp.shift());
+			dilExp = dilExp.join('/');
+			printString += `<span class="field">Lot:</span>${lot} <span class="field">Exp:</span>${exp}<br><span class="field">${vaccines[sI].short}:</span>${dilLot} <span class="field">${vaccines[sI].short} Exp:</span>${dilExp}`;
+		} else {
+			printString += `<span class="field">Lot:</span>${lot} <span class="field">Exp:</span>${exp}`;
+		}
+		newLi.dataset.string = `${qty}::${printString}`;
+		newLi.innerText = `${vaccines[sI].name} ${lot} x${qty}`;
+		pq.appendChild(newLi);
+	}
+	function refresh() {
+		let sI = document.getElementById("drug").selectedIndex;
+		if ([3,4,6].includes(sI)) {
+			document.getElementById("dil1").style.display = "";
+			document.getElementById("dil2").style.display = "";
+			if (sI == 4) {
+				document.getElementById("lot").innerText = "Lyophilized Component Lot";
+				document.getElementById("exp").innerText = "Lyophilized Component Expiration";
+				document.getElementById("dilLot").innerText = "Diluent Lot";
+				document.getElementById("dilExp").innerText = "Diluent Expiration";
+			} else if (sI == 6 || sI == 3) {
+				document.getElementById("lot").innerText = "Lyophilized Component Lot";
+				document.getElementById("exp").innerText = "Lyophilized Component Expiration";
+				document.getElementById("dilLot").innerText = "Adjuvant Lot";
+				document.getElementById("dilExp").innerText = "Adjuvant Expiration";
+			}
+		} else {
+			document.getElementById("dil1").style.display = "none";
+			document.getElementById("dil2").style.display = "none";
+			document.getElementById("lot").innerText = "Lot";
+			document.getElementById("exp").innerText = "Expiration";
+		}
+	}
+</script>
+</body>
+</html>

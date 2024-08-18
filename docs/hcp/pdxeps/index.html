@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>PDX EPS Tools | LowerCopay.org</title>
+	<link rel="stylesheet" type="text/css" href="/styles/main.css">
+	<style type="text/css">
+		.wrapper {
+			display: inherit;
+		}
+	</style>
+</head>
+<body>
+	<h3>EPS Tools</h3>
+	<p>These small tools are designed to facilitate data entry at certain stages within EPS.</p>
+	<div class="wrapper">
+		<div class="custom-input">
+			<input type="radio" name="desc" id="imm" onclick="window.location.href = '/hcp/pdxeps/immunization-lot'">
+			<label for="imm" style="text-align: left;">Immunization Lot Quick-fill</label>
+		</div>
+		<div class="custom-input">
+			<input type="radio" name="desc" id="imm2" onclick="window.location.href = '/hcp/pdxeps/immunization-lot-v2'">
+			<label for="imm2" style="text-align: left;">Immunization Lot Quick-fill v2</label>
+		</div>
+		<div class="custom-input">
+			<input type="radio" name="desc" id="exp" onclick="window.location.href = '/hcp/pdxeps/fill-expiration'">
+			<label for="exp" style="text-align: left;">Fill Expiration Quick-fill</label>
+		</div>
+	</div>
+</body>
+</html>

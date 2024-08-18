@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>EPS Immunization Lot Quick-fill v2 | LowerCopay.org</title>
+	<style type="text/css">
+		label {
+			font-size: 75%;
+		}
+		input, select, textarea {
+			display: block;
+			border: 1px solid #000;
+		}
+		input[type=checkbox] {
+			display: inline-block;
+		}
+		input[type=date] {
+			font-size: 0.3rem;
+		}
+		input:disabled, textarea:disabled, select:disabled {
+			background-color: #ebebe4;
+		}
+		input {
+		}
+		div {
+			display: inline-block;
+		}
+		div.section {
+			float: left;
+			margin-right: 30px;
+		}
+	</style>
+</head>
+<body>
+	<p>Drug Batch Processing - Create New Batch</p>
+	<div class="section">
+		<div>
+			<label for="fillDate">Fill Date</label>
+		    <input type="date" id="fillDate" name="fillDate" disabled="disabled">
+		</div>
+		<br>
+	    <div>
+		    <label for="daw">DA<u>W</u></label>
+		    <select id="daw" name="daw" disabled="disabled">
+				<option value="0">0 - No Product Selection Indicated</option>
+				<option value="1">1 - Substitution Not Allowed by Prescriber</option>
+				<option value="2">2 - Substitution Allowed - Patient Requested That Brand Product Be Dispensed</option>
+				<option value="3">3 - Substitution Allowed - Pharmacist Selected Product Dispensed</option>
+				<option value="4">4 - Substitution Allowed - Generic Drug Not in Stock</option>
+				<option value="5">5 - Substitution Allowed - Brand Drug Dispensed as Generic</option>
+				<option value="6">6 - Override</option>
+				<option value="7">7 - Substitution Not Allowed - Brand Drug Mandated by Law</option>
+				<option value="8">8 - Substitution Allowed - Generic Drug Not Available in Marketplace</option>
+				<option value="9">9 - Other</option>
+		    </select>
+		</div>
+		<div>
+			<label for="rxWritten">Rx Written</label>
+		    <input type="date" id="rxWritten" name="rxWritten" disabled="disabled">
+		</div>
+		<br>
+		<div>
+			<label for="prescribedDrug">Pres<u>c</u>ribed Drug</label>
+		    <textarea id="prescribedDrug" name="prescribedDrug" rows="3" cols="73"></textarea>
+		</div>
+		<br>
+		<div>
+			<label for="prescribedQty">Prescribed Qty</label>
+		    <input type="number" id="prescribedQty" name="prescribedQty">
+		</div>
+		<div>
+			<label for="rxExpires">Rx Expires</label>
+		    <input type="date" id="rxExpires" name="rxExpires" onload="console.log(this);" disabled="disabled">
+		</div>
+		<div>
+			<label for="visPublishedDate">VIS Published Date</label>
+		    <input type="date" id="visPublishedDate" name="visPublishedDate" disabled="disabled">
+		</div>
+		<br>
+		<div>
+			<label for="sigCode">SIG Code</label>
+			<input type="text" id="sigCode" name="sigCode">
+		</div>
+		<br>
+		<div>
+			<label for="sigText">SI<u>G</u> Text</label>
+		    <textarea id="sigText" name="sigText" rows="3" cols="73"></textarea>
+		</div>
+		<br>
+		<div>
+			<label for="daysSupply">Day<u>s</u> Supply</label>
+		    <input type="number" id="daysSupply" name="daysSupply">
+		</div>
+	    <div>
+		    <label for="rxOrigin">Rx Origin</label>
+		    <select id="rxOrigin" name="rxOrigin" disabled="disabled">
+				<option value="W">Written by Prescriber</option>
+				<option value="F">Faxed By Prescriber</option>
+				<option value="P">Phoned By Prescriber</option>
+				<option value="M">Manual Transfer</option>
+				<option value="Ph" selected="selected">Pharmacy</option>
+		    </select>
+		</div>
+		<br>
+		<div>
+			<input type="checkbox" id="offSite" name="offSite" disabled="disabled">
+			<label for="offSite"><u>O</u>ff-Site</label>
+		</div>
+	</div>
+	<div class="section">
+		<span><b>Prescriber</b></span><br>
+		<div>
+			<label for="prescriberLast">Last Name</label>
+			<input type="text" id="prescriberLast" name="prescriberLast">
+		</div>
+		<div>
+			<label for="prescriberFirst">First Name</label>
+			<input type="text" id="prescriberFirst" name="prescriberFirst">
+		</div>
+		<br>
+		<div>
+			<label for="DEA">DEA</label>
+			<input type="text" id="DEA" name="DEA" disabled="disabled">
+		</div>
+		<div>
+			<label for="prescriberNpi">NPI</label>
+			<input type="text" id="prescriberNpi" name="prescriberNpi">
+		</div>
+		<br>
+		<span><b>Dispensed Drug Information</b></span><br>
+		<div>
+			<label for="lotNumber">Lot Number</label>
+			<input type="text" id="lotNumber" name="lotNumber">
+		</div>
+		<div>
+			<label for="lotExpiration">Lot Expiration</label>
+			<input type="date" id="lotExpiration" name="lotExpiration">
+		</div>
+		<div>
+			<label for="serialNumber">Serial Number</label>
+			<input type="text" id="serialNumber" name="serialNumber" size="9">
+		</div>
+		<br>
+		<span><b>Vaccine Administrator</b></span><br>
+		<div>
+			<label for="adminLast">Last Name</label>
+			<input type="text" id="adminLast" name="adminLast">
+		</div>
+		<div>
+			<label for="adminFirst">First Name</label>
+			<input type="text" id="adminFirst" name="adminFirst">
+		</div>
+		<br>
+		<div>
+			<label for="userType">User Type</label>
+			<input type="text" id="userType" name="userType" disabled="disabled">
+		</div>
+		<div>
+			<label for="adminNpi">NPI</label>
+			<input type="text" id="adminNpi" name="adminNpi" disabled="disabled">
+		</div>
+		<br>
+		<span><b>Route of Administration</b></span><br>
+		<div>
+			<label for="adminCode">Code</label>
+			<input type="text" id="adminCode" name="adminCode" disabled="disabled">
+		</div>
+		<div>
+			<label for="adminDescription">Description</label>
+			<input type="text" id="adminDescription" name="adminDescription" disabled="disabled">
+		</div>
+		<br>
+		<div>
+			<label for="notes">Notes For This Fill</label>
+		    <textarea id="notes" name="notes" rows="3" cols="39"></textarea>
+		</div>
+	</div>
+	<script type="text/javascript">
+		document.getElementById('rxExpires').value = (new Date(new Date().setFullYear(new Date().getFullYear() + 1) - new Date().getTimezoneOffset() * 60000)).toISOString().substring(0,10);
+	</script>
+</body>
+</html>

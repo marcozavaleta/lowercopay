@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Label Generator | LowerCopay.org</title>
+	<style type="text/css">
+		body {
+			margin: 0;
+			padding: 0;
+		}
+		table {
+			font-size: 12.468px;
+			width: 100%;
+			text-align: center;
+			margin-top: 60px;
+		}
+		tr {
+			width: 25%;
+		}
+		td {
+			padding-bottom: 10px;
+		}
+		.ndc {
+			font-size: 5px;
+			vertical-align: bottom;
+		}
+		.field {
+			font-size: 8px;
+		}
+	</style>
+</head>
+<body>
+<table id="info" cellspacing="1"></table>
+<p id="info"></p>
+<script type="text/javascript">
+	let labels = [];
+	let order = window.location.search.substring(1);
+	let split_order = order.split("|");
+	let tabl = document.getElementById("info");
+	for (var i = 0; i < split_order.length; i++) {
+		let oo = split_order[i].split("::");
+		let qty = oo[0];
+		let thing = oo[1];
+		for (var j = 0; j < qty; j++) {
+			labels.push(thing)
+		}
+	}
+	let tri = 0;
+	let tr = document.createElement("tr");
+	for (var i = 0; i < labels.length; i++) {
+		if (tri == 4) {
+			tabl.appendChild(tr);
+			tri = 0
+			tr = document.createElement("tr");
+		}
+		let td = document.createElement("td");
+		td.innerHTML = decodeURI(labels[i]);
+		tr.appendChild(td);
+		tri++;
+		if (i == 47) break;
+	}
+	tabl.appendChild(tr);
+	// window.print();
+</script>
+</body>
+</html>

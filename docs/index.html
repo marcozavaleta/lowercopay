@@ -1,17 +1,163 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>LowerCopay.org</title>
-	<style type="text/css">
-		body {
-			background: grey;
-		}
-	</style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>LowerCopay.org</title>
+    <style type="text/css">
+        body {
+            background: grey;
+            color: #222222;
+            font-size: 1.1em;
+        }
+        p {
+            font-size: 1.1em;
+        }
+        button {
+            font-size: 1.1em;
+        }
+        input {
+            font-size: 1.7em;
+            text-align: center;
+            display: block;
+        }
+        .error {
+            color: #a92323;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        div {
+            float: left;
+            margin-right: 10px;
+        }
+        u.more {
+            text-underline-position: under;
+        }
+        tr:hover {
+            color: lightgreen;
+        }
+    </style>
 </head>
 <body>
-	<h4>Coming Soon.</h4>
-	<a href="/eps/">Pharmacy Login</a>
+    <h5 style="float: right; margin-right: 2em;"><a href="/hcp"><u>Pharmacy Portal</u></a></h5>
+    <iframe src="https://www.buzzrx.com" width="100%" height="700"></iframe>
 </body>
+<script type="text/javascript">
+// https://stackoverflow.com/a/55010378, by trincot
+document.addEventListener('DOMContentLoaded', () => {
+    for (const el of document.querySelectorAll("[placeholder][data-slots]")) {
+        const pattern = el.getAttribute("placeholder"),
+            slots = new Set(el.dataset.slots || "_"),
+            prev = (j => Array.from(pattern, (c,i) => slots.has(c)? j=i+1: j))(0),
+            first = [...pattern].findIndex(c => slots.has(c)),
+            accept = new RegExp(el.dataset.accept || "\\d", "g"),
+            clean = input => {
+                input = input.match(accept) || [];
+                return Array.from(pattern, c =>
+                    input[0] === c || slots.has(c) ? input.shift() || c : c
+                );
+            },
+            format = () => {
+                const [i, j] = [el.selectionStart, el.selectionEnd].map(i => {
+                    i = clean(el.value.slice(0, i)).findIndex(c => slots.has(c));
+                    return i<0? prev[prev.length-1]: back? prev[i-1] || first: i;
+                });
+                el.value = clean(el.value).join``;
+                el.setSelectionRange(i, j);
+                back = false;
+            };
+        let back = false;
+        el.addEventListener("keydown", (e) => back = e.key === "Backspace");
+        el.addEventListener("input", format);
+        el.addEventListener("focus", format);
+        el.addEventListener("blur", () => el.value === pattern && (el.value=""));
+    }
+});
+const regex = /\d{5}-\d{4}-\d{2}/;
+async function searchNdc(bypass=false) {
+    if (bypass || (m = regex.exec(document.getElementById("ndc").value)) !== null) {
+        ndc = bypass ? document.getElementById("ndc").value : m[0];
+        var r = await fetch("https://api.lowercopay.org/v1/drug", {
+            method: "POST",
+            body: JSON.stringify({
+                ndc: ndc
+            })
+        });
+        var j = await r.json();
+    } else {
+        await new Promise(r => setTimeout(r, 1)); // This somehow prevents the .select() from clearing the field
+        document.getElementById("ndc").select();
+        document.getElementById("ndcError").style = "display: grid";
+        var t = document.getElementById("ndc").style;
+        for (const i of Array(4).keys()) {
+            document.getElementById("ndc").style = "outline: 3px solid red;";
+            await new Promise(r => setTimeout(r, 100));
+            document.getElementById("ndc").style = "";
+            await new Promise(r => setTimeout(r, 50));
+        }
+        await new Promise(r => setTimeout(r, 2000));
+        document.getElementById("ndcError").style = "display: none";
+    }
+}
+async function searchName() {
+    if (document.getElementById("drugname").value.length > 3) {
+        var r = await fetch("https://api.lowercopay.org/v1/drugs", {
+            method: "POST",
+            body: JSON.stringify({
+                name: document.getElementById("drugname").value
+            })
+        });
+        var j = await r.json();
+        var table = document.getElementById("results");
+        table.innerHTML = '';
+        for (var i = 0; i < j.results.length; i++) {
+            var tr = table.insertRow();
+            tr.id = j.results[i].ndc;
+            var deleg = async function() {
+                document.getElementById("ndc").value = tr.id;
+                await searchNdc(true); // true bypasses regex check
+            };
+            tr.onclick = async function() {
+                await deleg();
+            };
+            tr.appendChild(document.createTextNode(`${j.results[i].ndc} ${j.results[i].proprietary_name} (${j.results[i].non_proprietary_name}) ${j.results[i].active_ingredients.length != 0 ? j.results[i].active_ingredients.map(function(i){return i.active_numerator_strength}).join('/') : ''}${j.results[i].active_ingredients.length != 0 ? j.results[i].active_ingredients[0].active_ingred_unit.split('/')[0] : ''} ${j.results[i].dosage_form.split(',')[0]}`));
+        }
+
+    } else {
+        await new Promise(r => setTimeout(r, 1)); // This somehow prevents the .select() from clearing the field
+        document.getElementById("drugname").select();
+        document.getElementById("nameError").style = "display: grid";
+        var t = document.getElementById("drugname").style;
+        for (const i of Array(4).keys()) {
+            document.getElementById("drugname").style = "outline: 3px solid red;";
+            await new Promise(r => setTimeout(r, 100));
+            document.getElementById("drugname").style = "";
+            await new Promise(r => setTimeout(r, 50));
+        }
+        await new Promise(r => setTimeout(r, 2000));
+        document.getElementById("nameError").style = "display: none";
+    }
+}
+async function search() {
+    if(document.getElementById("drugname").value) {
+        await searchName();
+    } else {
+        await searchNdc();
+    }
+}
+async function KeyPress(e) {
+    var evtobj = window.event? event : e
+    if (evtobj.keyCode == 71 && evtobj.altKey) {
+        document.getElementById("drugname").focus();
+        evtobj.preventDefault();
+    }
+    if (evtobj.keyCode == 68 && evtobj.altKey) document.getElementById("ndc").focus();
+    if (evtobj.keyCode == 83 && evtobj.altKey) {
+        await search();
+    }
+}
+document.onkeydown = KeyPress;
+</script>
 </html>
